@@ -5,7 +5,7 @@ The script generate a Google ID JWT token for authenticating requests with Elast
 ## Install requirements
 
 ```
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 ## Generate API JWT token
