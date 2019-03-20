@@ -18,6 +18,7 @@ import os
 import sys
 import time
 import json
+import argparse
 import http.client
 import urllib.parse
 import google.auth.crypt as google_auth_crypt
@@ -73,15 +74,46 @@ def get_google_id_token(sa_jwt_token: str) -> str:
     return res['id_token']
 
 
+def usage():
+    tool_name = os.path.basename(__file__)
+    help_message = f"""This tool must get a credentials file. alternatively, you can set an environment variable to hold the path.
+                   Usage: python {tool_name} -f/ --file <full-path-to-credentials-file>
+                   Or, set the environment variable:
+                   export {__CREDENTIALS_ENV_VAR__}=<full-path-to-credentials-file> """
+    return help_message
+
+
+def get_credentials_file_path_from_cli() -> str or None:
+    parser = argparse.ArgumentParser(epilog=usage(),
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('-f', '--file', help='The full path to your json file.')
+    args = parser.parse_args()
+
+    return args.file
+
+
+def get_credentials_file_path_from_environment() -> str or None:
+    return os.environ.get(__CREDENTIALS_ENV_VAR__)
+
+
+def get_credentials_file_path() -> str or None:
+    file_path = get_credentials_file_path_from_cli()
+    if not file_path:
+        file_path = get_credentials_file_path_from_environment()
+    if not file_path:
+        print("Environment variable {} is not set or missing path to "
+              "credentials file.".format(__CREDENTIALS_ENV_VAR__))
+        sys.exit(1)
+
+    return file_path
+
+
 def main():
     """
     Script main method
     """
-    credentials_file = os.environ.get(__CREDENTIALS_ENV_VAR__)
-    if not credentials_file:
-        print("Environment variable {} is not set or missing path to "
-              "credentials file.".format(__CREDENTIALS_ENV_VAR__))
-        sys.exit(1)
+    credentials_file = get_credentials_file_path()
+
     try:
         with open(credentials_file) as f:
             data = json.load(f)
