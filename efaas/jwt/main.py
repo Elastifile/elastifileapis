@@ -74,11 +74,21 @@ def get_google_id_token(sa_jwt_token: str) -> str:
     return res['id_token']
 
 
+def usage():
+    tool_name = os.path.basename(__file__)
+    help_message = f"""This tool must get a credentials file. alternatively, you can set an environment variable to hold the path.
+                   Usage: python {tool_name} -f/ --file <full-path-to-credentials-file>
+                   Or, set the environment variable:
+                   export {__CREDENTIALS_ENV_VAR__}=<full-path-to-credentials-file> """
+    return help_message
+
+
 def get_credentials_file_path_from_cli() -> str or None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-f', '--file', help='The full path to your json file.')
+    parser = argparse.ArgumentParser(epilog=usage(),
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('-f', '--file', help='The full path to your json file.')
     args = parser.parse_args()
+
     return args.file
 
 
