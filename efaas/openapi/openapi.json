@@ -1096,51 +1096,6 @@
   "consumes": [
     "application/json"
   ],
-  "securityDefinitions": {
-    "cloud-console-partner-local": {
-      "authorizationUrl": "",
-      "flow": "implicit",
-      "type": "oauth2",
-      "x-google-issuer": "cloud-console-partner-local@metropolis-demo.iam.gserviceaccount.com",
-      "x-google-jwks_uri": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-console-partner-local@metropolis-demo.iam.gserviceaccount.com"
-    },
-    "cloud-console-partner": {
-      "authorizationUrl": "",
-      "flow": "implicit",
-      "type": "oauth2",
-      "x-google-issuer": "cloud-console-partner@system.gserviceaccount.com",
-      "x-google-jwks_uri": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-console-partner@system.gserviceaccount.com"
-    },
-    "cloud-console-partner-autopush": {
-      "authorizationUrl": "",
-      "flow": "implicit",
-      "type": "oauth2",
-      "x-google-issuer": "cloud-console-partner-autopush@system.gserviceaccount.com",
-      "x-google-jwks_uri": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-console-partner@system.gserviceaccount.com"
-    },
-    "google-id": {
-      "authorizationUrl": "",
-      "flow": "implicit",
-      "type": "oauth2",
-      "x-google-issuer": "accounts.google.com",
-      "x-google-jwks_uri": "https://www.googleapis.com/oauth2/v3/certs",
-      "x-google-audiences": "344419276940-omb583ia3ft7hmase1kvmlmsic7ebeqk.apps.googleusercontent.com,563209362155-dmktm1rt2snprao3te1a5gf0tk9l39i8.apps.googleusercontent.com,981557660273-llqqkkbqotms0du0ehvjh84a565n1qin.apps.googleusercontent.com,72633378913-4ds74m61vu7erqeuk02ativs0sasrpts.apps.googleusercontent.com,198572333586-0t0utk4m4nboo9a810hgcab197duhpag.apps.googleusercontent.com"
-    }
-  },
-  "security": [
-    {
-      "cloud-console-partner-local": []
-    },
-    {
-      "cloud-console-partner": []
-    },
-    {
-      "cloud-console-partner-autopush": []
-    },
-    {
-      "google-id": []
-    }
-  ],
   "tags": [
     {
       "name": "projects/<project>/service-class",
