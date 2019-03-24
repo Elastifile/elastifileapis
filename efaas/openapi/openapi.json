@@ -1,0 +1,2067 @@
+{
+  "swagger": "2.0",
+  "basePath": "/api/v1",
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        },
+        "summary": "Authenticates using JWT from Google OAuth",
+        "description": "Validates the Google Oauth token.",
+        "operationId": "login",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        ],
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/projects": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Projects"
+            }
+          }
+        },
+        "summary": "Register project",
+        "operationId": "register_project",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Projects"
+            }
+          }
+        ],
+        "tags": [
+          "projects"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Projects"
+              }
+            }
+          }
+        },
+        "summary": "List projects",
+        "operationId": "list_projects",
+        "tags": [
+          "projects"
+        ]
+      }
+    },
+    "/projects/{project}": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The project numeric id",
+          "name": "project",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Projects"
+            }
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        },
+        "summary": "Get project resource",
+        "operationId": "get_project",
+        "tags": [
+          "projects"
+        ]
+      }
+    },
+    "/projects/{project}/addUsers": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The project numeric id",
+          "name": "project",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Projects"
+            }
+          }
+        },
+        "summary": "Add users to project",
+        "operationId": "project_add_users",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        ],
+        "tags": [
+          "projects"
+        ]
+      }
+    },
+    "/projects/{project}/events": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          }
+        },
+        "operationId": "List Events",
+        "tags": [
+          "projects/<project>/events"
+        ]
+      }
+    },
+    "/projects/{project}/events/count": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EventsCount"
+            }
+          }
+        },
+        "operationId": "Count Events",
+        "tags": [
+          "projects/<project>/events"
+        ]
+      }
+    },
+    "/projects/{project}/events/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The event identifier",
+          "name": "id",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Events"
+            }
+          },
+          "404": {
+            "description": "Event not found"
+          }
+        },
+        "operationId": "Get Event",
+        "tags": [
+          "projects/<project>/events"
+        ]
+      }
+    },
+    "/projects/{project}/events/{id}/ack": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The event identifier",
+          "name": "id",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Events"
+            }
+          },
+          "404": {
+            "description": "Event not found"
+          }
+        },
+        "operationId": "Ack Event",
+        "tags": [
+          "projects/<project>/events"
+        ]
+      }
+    },
+    "/projects/{project}/events/{id}/unack": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The event identifier",
+          "name": "id",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Events"
+            }
+          },
+          "404": {
+            "description": "Event not found"
+          }
+        },
+        "operationId": "UnAck Event",
+        "tags": [
+          "projects/<project>/events"
+        ]
+      }
+    },
+    "/projects/{project}/instances": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "operationId": "Create instance",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Instances"
+            }
+          },
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Instances"
+              }
+            }
+          }
+        },
+        "summary": "Return list of instances",
+        "operationId": "list_instances",
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/instances/{name}": {
+      "parameters": [
+        {
+          "description": "Instance name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Deletes the specified Instance resource",
+        "operationId": "delete_instance_item",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Instances"
+            }
+          },
+          "404": {
+            "description": "Instance not found"
+          }
+        },
+        "summary": ":param name:",
+        "description": ":rtype:",
+        "operationId": "get_instance",
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/instances/{name}/editParallel": {
+      "parameters": [
+        {
+          "description": "Resource name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Edit instance",
+        "operationId": "Edit instance",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/editParallel"
+            }
+          },
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/instances/{name}/getConstraints": {
+      "parameters": [
+        {
+          "description": "Resource name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/capacityUnits"
+            }
+          },
+          "400": {
+            "description": "Failed to get instance constraints"
+          },
+          "404": {
+            "description": "Instance not found"
+          }
+        },
+        "summary": "Get resource capacity constraints",
+        "operationId": "get_instance_constraints",
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/instances/{name}/setAccessors": {
+      "parameters": [
+        {
+          "description": "Resource name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Sets accessors for the specified instance to the data included in the request",
+        "operationId": "Sets accessors for the specified instance to the data included in the request.",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/accessors"
+            }
+          }
+        ],
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/instances/{name}/setCapacity": {
+      "parameters": [
+        {
+          "description": "Resource name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Sets capacity to instance",
+        "operationId": "post_instance_set_capacity",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/setCapacity"
+            }
+          }
+        ],
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/instances/{name}/setScheduling": {
+      "parameters": [
+        {
+          "description": "Resource name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Update instance snapshot scheduling",
+        "operationId": "post_instance_set_scheduling",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/snapshots"
+            }
+          }
+        ],
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/instances/{name}/statistics": {
+      "parameters": [
+        {
+          "description": "Resource name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/statistics"
+            }
+          },
+          "400": {
+            "description": "Failed to get instance statistics"
+          },
+          "404": {
+            "description": "Instance not found"
+          }
+        },
+        "summary": "Get resource statistics",
+        "operationId": "get_instance_statistics",
+        "tags": [
+          "projects/<project>/instances"
+        ]
+      }
+    },
+    "/projects/{project}/operation": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Operation"
+              }
+            }
+          }
+        },
+        "summary": "Return list of operations",
+        "operationId": "list_operations",
+        "tags": [
+          "projects/<project>/operation"
+        ]
+      }
+    },
+    "/projects/{project}/operation/{resourceId}": {
+      "parameters": [
+        {
+          "description": "Operation resource id",
+          "name": "resourceId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Operation"
+              }
+            }
+          }
+        },
+        "summary": "Return operation resource",
+        "operationId": "get_operation",
+        "tags": [
+          "projects/<project>/operation"
+        ]
+      }
+    },
+    "/projects/{project}/removeUsers": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The project numeric id",
+          "name": "project",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Projects"
+            }
+          }
+        },
+        "summary": "Remove users from project",
+        "operationId": "project_remove_users",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        ],
+        "tags": [
+          "projects"
+        ]
+      }
+    },
+    "/projects/{project}/service-class": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ServiceClass"
+              }
+            }
+          }
+        },
+        "summary": "Return list of service classes",
+        "operationId": "list_service_class",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, >, or <.\n For example, if you are filtering Service Class you can include only Service Classes with node type equal to medium by specifying nodeType = medium.\n To filter nested fields use regions.name = us-central1 to include Service Class available in us-central1 region.\n To filter on multiple expressions, provide each separate expression within parentheses. For example, (regions.name = us-central1) (nodeType = medium)",
+            "name": "filter",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/service-class"
+        ]
+      }
+    },
+    "/projects/{project}/service-class/{name}": {
+      "parameters": [
+        {
+          "description": "Service class name",
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceClass"
+            }
+          },
+          "404": {
+            "description": "Service Class not found"
+          }
+        },
+        "summary": "Get service class",
+        "operationId": "get_service_class",
+        "tags": [
+          "projects/<project>/service-class"
+        ]
+      }
+    },
+    "/projects/{project}/snapshots": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Snapshots"
+              }
+            }
+          }
+        },
+        "summary": "Return list of instances snapshots for the specified project",
+        "operationId": "list_snapshots",
+        "tags": [
+          "projects/<project>/snapshots"
+        ]
+      }
+    },
+    "/projects/{project}/snapshots/instances/{instance}": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "instance",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Create manual snapshot",
+        "operationId": "create_instance_snapshot",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Snapshots"
+            }
+          },
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/snapshots"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Snapshots"
+              }
+            }
+          }
+        },
+        "summary": "Return list of instance snapshots",
+        "operationId": "list_instance_snapshots",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/snapshots"
+        ]
+      }
+    },
+    "/projects/{project}/snapshots/{resourceId}": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "resourceId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Deletes the specified snapshot",
+        "description": "Deleting a snapshot removes its data permanently and is irreversible",
+        "operationId": "delete_snapshot",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/snapshots"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Snapshots"
+            }
+          }
+        },
+        "summary": "Returns a specified snapshot",
+        "operationId": "get_snapshot",
+        "tags": [
+          "projects/<project>/snapshots"
+        ]
+      }
+    },
+    "/projects/{project}/snapshots/{resourceId}/share": {
+      "parameters": [
+        {
+          "name": "project",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "resourceId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Create share for the specified snapshot resource",
+        "operationId": "create_share",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SnapshotShareCreate"
+            }
+          },
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/snapshots"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            }
+          }
+        },
+        "summary": "Delete share for the specified snapshot resource",
+        "operationId": "delete_share",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. \nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+            "name": "requestId",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects/<project>/snapshots"
+        ]
+      }
+    },
+    "/regions": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/region"
+              }
+            }
+          }
+        },
+        "summary": "Retrieves the list of region resources available for service",
+        "operationId": "list_regions",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, >, or <.\n For example, if you are filtering Service Class you can include only Service Classes with node type equal to medium by specifying nodeType = medium.\n To filter nested fields use regions.name = us-central1 to include Service Class available in us-central1 region.\n To filter on multiple expressions, provide each separate expression within parentheses. For example, (regions.name = us-central1) (nodeType = medium)",
+            "name": "filter",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "regions"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Elastifile FaaS API",
+    "version": "1.0",
+    "description": "Elastifile Filesystem as a Service API"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "cloud-console-partner-local": {
+      "authorizationUrl": "",
+      "flow": "implicit",
+      "type": "oauth2",
+      "x-google-issuer": "cloud-console-partner-local@metropolis-demo.iam.gserviceaccount.com",
+      "x-google-jwks_uri": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-console-partner-local@metropolis-demo.iam.gserviceaccount.com"
+    },
+    "cloud-console-partner": {
+      "authorizationUrl": "",
+      "flow": "implicit",
+      "type": "oauth2",
+      "x-google-issuer": "cloud-console-partner@system.gserviceaccount.com",
+      "x-google-jwks_uri": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-console-partner@system.gserviceaccount.com"
+    },
+    "cloud-console-partner-autopush": {
+      "authorizationUrl": "",
+      "flow": "implicit",
+      "type": "oauth2",
+      "x-google-issuer": "cloud-console-partner-autopush@system.gserviceaccount.com",
+      "x-google-jwks_uri": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-console-partner@system.gserviceaccount.com"
+    },
+    "google-id": {
+      "authorizationUrl": "",
+      "flow": "implicit",
+      "type": "oauth2",
+      "x-google-issuer": "accounts.google.com",
+      "x-google-jwks_uri": "https://www.googleapis.com/oauth2/v3/certs",
+      "x-google-audiences": "344419276940-omb583ia3ft7hmase1kvmlmsic7ebeqk.apps.googleusercontent.com,563209362155-dmktm1rt2snprao3te1a5gf0tk9l39i8.apps.googleusercontent.com,981557660273-llqqkkbqotms0du0ehvjh84a565n1qin.apps.googleusercontent.com,72633378913-4ds74m61vu7erqeuk02ativs0sasrpts.apps.googleusercontent.com,198572333586-0t0utk4m4nboo9a810hgcab197duhpag.apps.googleusercontent.com"
+    }
+  },
+  "security": [
+    {
+      "cloud-console-partner-local": []
+    },
+    {
+      "cloud-console-partner": []
+    },
+    {
+      "cloud-console-partner-autopush": []
+    },
+    {
+      "google-id": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "projects/<project>/service-class",
+      "description": "Service Class related operations"
+    },
+    {
+      "name": "projects/<project>/instances",
+      "description": "Instances related operations"
+    },
+    {
+      "name": "projects/<project>/operation",
+      "description": "Operations related "
+    },
+    {
+      "name": "regions",
+      "description": "Region related operation"
+    },
+    {
+      "name": "projects",
+      "description": "Projects related operations"
+    },
+    {
+      "name": "auth",
+      "description": "Authentication related operations"
+    },
+    {
+      "name": "projects/<project>/events",
+      "description": "Events related operations"
+    },
+    {
+      "name": "projects/<project>/snapshots",
+      "description": "Snapshots related operations"
+    }
+  ],
+  "definitions": {
+    "ServiceClass": {
+      "required": [
+        "description",
+        "name",
+        "nodeType",
+        "storageBackend"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+        },
+        "name": {
+          "type": "string",
+          "description": "[Output Only] Name of the resource."
+        },
+        "description": {
+          "type": "string",
+          "description": "[Output Only] A textual description of the resource."
+        },
+        "regions": {
+          "type": "array",
+          "description": "ServiceClass supported regions",
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/region"
+          }
+        },
+        "storageBackend": {
+          "type": "string",
+          "description": "Storage backend device type",
+          "default": "SSD-PD",
+          "example": "SSD-PD",
+          "enum": [
+            "SSD-PD",
+            "STD-PD",
+            "SSD-LOCAL"
+          ]
+        },
+        "capacityUnits": {
+          "$ref": "#/definitions/capacityUnits"
+        },
+        "serviceProtection": {
+          "$ref": "#/definitions/serviceProtection"
+        },
+        "nodeType": {
+          "type": "string",
+          "description": "",
+          "default": "medium",
+          "example": "small",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ]
+        },
+        "clearTier": {
+          "$ref": "#/definitions/clearTier"
+        },
+        "storagePrice": {
+          "$ref": "#/definitions/storagePrice"
+        },
+        "displayOrder": {
+          "type": "integer",
+          "description": "",
+          "default": 999
+        },
+        "deprecated": {
+          "$ref": "#/definitions/deprecated"
+        }
+      },
+      "type": "object"
+    },
+    "region": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "[Output Only] Name of the resource."
+        },
+        "zones": {
+          "type": "array",
+          "description": "[Output Only] A list of zones available in this region",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "capacityUnits": {
+      "required": [
+        "unitSize"
+      ],
+      "properties": {
+        "unitSize": {
+          "type": "integer",
+          "description": "Increment steps of capacity units, currently a size of a node in bytes."
+        },
+        "min": {
+          "type": "integer",
+          "description": "Minimum capacity units supported by this class (min # of nodes)",
+          "default": 3
+        },
+        "max": {
+          "type": "integer",
+          "description": "Maximum capacity units supported by this class (max # of nodes)",
+          "default": 30
+        }
+      },
+      "type": "object"
+    },
+    "serviceProtection": {
+      "properties": {
+        "protectionMode": {
+          "type": "string",
+          "description": "Defines the Availability Zones support",
+          "default": "single",
+          "example": "single",
+          "enum": [
+            "single",
+            "multi"
+          ]
+        },
+        "replicationLevel": {
+          "type": "integer",
+          "description": "Number of data copies",
+          "default": 3
+        }
+      },
+      "type": "object"
+    },
+    "clearTier": {
+      "required": [
+        "balance",
+        "extension"
+      ],
+      "properties": {
+        "extension": {
+          "type": "integer",
+          "description": "Modi/Adi need to provide'",
+          "default": 0
+        },
+        "balance": {
+          "type": "integer",
+          "description": "Modi/Adi need to provide'"
+        }
+      },
+      "type": "object"
+    },
+    "storagePrice": {
+      "required": [
+        "SnapshotsStoragePrice",
+        "filesystemStoragePrice"
+      ],
+      "properties": {
+        "filesystemStoragePrice": {
+          "type": "number",
+          "description": "Price per GB of the primary file system ($/GB/Mo)"
+        },
+        "SnapshotsStoragePrice": {
+          "type": "number",
+          "description": "Price per GB of ClearTier (Object) storage $/GB/Mo"
+        },
+        "estimates": {
+          "type": "object",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "deprecated": {
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Service Class state, DEPRECATED, OBSOLETE or DELETED, Deprecated indicate that service class was replaced by a newer one, but can be used for new/existing instances. Obsolete indicate in use by existing instances but will fail for new instances. Deleted indicate can not be used by either existing nor new created instances.",
+          "example": "DEPRECATED",
+          "enum": [
+            "DEPRECATED",
+            "OBSOLETE",
+            "DELETED",
+            "ACTIVE"
+          ]
+        },
+        "replacement": {
+          "type": "string",
+          "description": "New service class that is in use instead"
+        }
+      },
+      "type": "object"
+    },
+    "Instances": {
+      "required": [
+        "name",
+        "network",
+        "provisionedCapacityUnits",
+        "serviceClass",
+        "snapshot"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035"
+        },
+        "description": {
+          "type": "string",
+          "description": "[Output Only] A textual description of the resource.",
+          "maxLength": 2000
+        },
+        "serviceClass": {
+          "type": "string",
+          "description": "ServiceClass name"
+        },
+        "serviceClassId": {
+          "type": "string",
+          "description": "ServiceClass resource unique id",
+          "readOnly": true
+        },
+        "serviceClassDescription": {
+          "type": "string",
+          "description": "ServiceClass descriptive name",
+          "readOnly": true
+        },
+        "provisionedCapacityUnits": {
+          "type": "number",
+          "description": "The number of storage capacity units provisioned"
+        },
+        "capacityUnitType": {
+          "type": "string",
+          "description": "The unit used for capacity, possible values are: Steps, Bytes.\n Default value is Steps.",
+          "default": "Steps",
+          "example": "Steps",
+          "enum": [
+            "Steps",
+            "Bytes"
+          ]
+        },
+        "allocatedCapacity": {
+          "type": "integer",
+          "description": "The allocated capacity in bytes",
+          "readOnly": true
+        },
+        "region": {
+          "type": "string",
+          "description": "Region name for this request, required if serviceClass.serviceProtection.protectionMode is set to 'multi'."
+        },
+        "zone": {
+          "type": "string",
+          "description": "Zone name for this request, required if serviceClass.serviceProtection.protectionMode is set to 'single'."
+        },
+        "network": {
+          "type": "string",
+          "description": "Name of your VPC network connected with service producer network."
+        },
+        "networkProject": {
+          "type": "string",
+          "description": "The host project id if using a shared VPC network."
+        },
+        "accessors": {
+          "description": "Defines the access rights to the File System. This is a listof access rights configured by the client for the file system.",
+          "$ref": "#/definitions/accessors"
+        },
+        "snapshot": {
+          "description": "Snapshot object",
+          "$ref": "#/definitions/snapshots"
+        },
+        "nfsMountPoint": {
+          "type": "string",
+          "description": "The NFS service mount point to use for accessing the filesystem.",
+          "readOnly": true
+        },
+        "status": {
+          "type": "string",
+          "description": "[Output Only] The status of the operation, which can be one of the following: PENDING, RUNNING, or DONE.",
+          "readOnly": true
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "[Output Only] An optional textual description of the current status of the operation.",
+          "readOnly": true
+        },
+        "creationTimestamp": {
+          "type": "string",
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "readOnly": true
+        },
+        "utilization": {
+          "description": "instance utilization metrics",
+          "readOnly": true,
+          "$ref": "#/definitions/utilization"
+        },
+        "serviceHealth": {
+          "description": "instance health metrics",
+          "readOnly": true,
+          "$ref": "#/definitions/serviceHealth"
+        }
+      },
+      "type": "object"
+    },
+    "accessors": {
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/accessor_items"
+          }
+        },
+        "fingerprint": {
+          "type": "string",
+          "description": "Specifies a fingerprint for this request, which is essentially a hash of the accessors contents and used for optimistic locking. The fingerprint is initially generated by server and changes after every request to modify or update accessors. You must always provide an up-to-date fingerprint hash in order to update or change accessors.\n To see the latest fingerprint, make get() request to the instance. \n\nA base64-encoded string."
+        }
+      },
+      "type": "object"
+    },
+    "accessor_items": {
+      "required": [
+        "accessRights",
+        "sourceRange"
+      ],
+      "properties": {
+        "sourceRange": {
+          "type": "string",
+          "description": "Source range to accept traffic from, These range must be, expressed in CIDR format or you also use the 'all' alias to define the range of internal addresses (10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16)"
+        },
+        "accessRights": {
+          "type": "string",
+          "description": "Define access rights for clients originated from the specified source range, supported values are: readOnly and readWrite.",
+          "example": "readOnly",
+          "enum": [
+            "readOnly",
+            "readWrite"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "snapshots": {
+      "required": [
+        "enable",
+        "schedule"
+      ],
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Indicates whether snapshots usage in enabled for the instance.",
+          "default": false
+        },
+        "schedule": {
+          "type": "string",
+          "description": "When snapshot.enable is set to true, this field indicates how often to schedule snapshot creation.",
+          "example": "Daily",
+          "enum": [
+            "Daily",
+            "Weekly",
+            "Monthly"
+          ]
+        },
+        "retention": {
+          "type": "number",
+          "description": "Snapshot retention policy. The number of days to hold the snapshot till automatic deletion. Default 0, meaning no retention policy defined.",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 2555
+        }
+      },
+      "type": "object"
+    },
+    "utilization": {
+      "properties": {
+        "fileSystem": {
+          "type": "integer",
+          "description": "The amount of data placed into the filesystem in bytes, without snapshots."
+        },
+        "snapshots": {
+          "type": "integer",
+          "description": "The amount of object store bytes taken for snapshots."
+        }
+      },
+      "type": "object"
+    },
+    "serviceHealth": {
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "The instance health"
+        },
+        "description": {
+          "type": "string",
+          "description": "The instance health description"
+        }
+      },
+      "type": "object"
+    },
+    "Operation": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+        },
+        "name": {
+          "type": "string",
+          "description": "[Output Only] Name of the resource."
+        },
+        "description": {
+          "type": "string",
+          "description": "[Output Only] A textual description of the resource."
+        },
+        "clientOperationId": {
+          "type": "string",
+          "description": "[Output Only] The value of requestId if you provided it in the request. Not present otherwise."
+        },
+        "operationType": {
+          "type": "string",
+          "description": "[Output Only] The type of operation, such as insert, update, or delete, and so on."
+        },
+        "targetLink": {
+          "type": "string",
+          "description": "[Output Only] The URL of the resource that the operation modifies."
+        },
+        "targetId": {
+          "type": "string",
+          "description": "[Output Only] The unique target ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "[Output Only] The status of the operation, which can be one of the following: PENDING, RUNNING, or DONE.",
+          "example": "PENDING",
+          "enum": [
+            "PENDING",
+            "RUNNING",
+            "DONE"
+          ]
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "[Output Only] An optional textual description of the current status of the operation."
+        },
+        "user": {
+          "type": "string",
+          "description": "[Output Only] User who requested the operation, for example: user@example.com"
+        },
+        "progress": {
+          "type": "integer",
+          "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess when the operation will be complete. This number should monotonically increase as the operation progresses."
+        },
+        "insertTime": {
+          "type": "string",
+          "description": "[Output Only] The time that this operation was requested. This value is in RFC3339 text format."
+        },
+        "startTime": {
+          "type": "string",
+          "description": "[Output Only] The time that this operation was started by the server. This value is in RFC3339 text format."
+        },
+        "endTime": {
+          "type": "string",
+          "description": "[Output Only] The time that this operation was completed. This value is in RFC3339 text format."
+        },
+        "error": {
+          "description": "[Output Only] If errors are generated during processing of the operation, this field will be populated.",
+          "$ref": "#/definitions/error"
+        },
+        "warnings": {
+          "type": "array",
+          "description": "[Output Only] If warning messages are generated during processing of the operation, this field will be populated.",
+          "items": {
+            "$ref": "#/definitions/warnings"
+          }
+        },
+        "httpErrorStatusCode": {
+          "type": "integer",
+          "description": "[Output Only] This field contains the HTTP error status code that was returned. For example, a 404 means the resource was not found."
+        },
+        "httpErrorMessage": {
+          "type": "string",
+          "description": "[Output Only] This field contains the HTTP error message that was returned, such as NOT FOUND."
+        }
+      },
+      "type": "object"
+    },
+    "error": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/errors"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "errors": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "warnings": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "setCapacity": {
+      "required": [
+        "provisionedCapacityUnits"
+      ],
+      "properties": {
+        "provisionedCapacityUnits": {
+          "type": "number",
+          "description": "The number of storage capacity units provisioned"
+        },
+        "capacityUnitType": {
+          "type": "string",
+          "description": "The unit used for capacity, possible values are: Steps, Bytes.\n Default value is Steps.",
+          "default": "Steps",
+          "example": "Steps",
+          "enum": [
+            "Steps",
+            "Bytes"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "statistics": {
+      "properties": {
+        "readThroughput": {
+          "type": "integer",
+          "description": "Number of reads in bytes",
+          "readOnly": true,
+          "default": 0
+        },
+        "writeThroughput": {
+          "type": "integer",
+          "description": "Number of writes in bytes",
+          "readOnly": true,
+          "default": 0
+        },
+        "readIOPS": {
+          "type": "integer",
+          "description": "Number of read IOPS",
+          "readOnly": true,
+          "default": 0
+        },
+        "writeIOPS": {
+          "type": "integer",
+          "description": "Number of write IOPS",
+          "readOnly": true,
+          "default": 0
+        },
+        "mdIOPS": {
+          "type": "integer",
+          "description": "Number of metadata IOPS",
+          "readOnly": true,
+          "default": 0
+        },
+        "readLatency": {
+          "type": "integer",
+          "description": "Read latency in nano seconds",
+          "readOnly": true,
+          "default": 0
+        },
+        "writeLatency": {
+          "type": "integer",
+          "description": "Write latency in nano seconds",
+          "readOnly": true,
+          "default": 0
+        },
+        "mdLatency": {
+          "type": "integer",
+          "description": "Metadata latency in nano seconds",
+          "readOnly": true,
+          "default": 0
+        }
+      },
+      "type": "object"
+    },
+    "editParallel": {
+      "properties": {
+        "setCapacity": {
+          "$ref": "#/definitions/setCapacity"
+        },
+        "setScheduling": {
+          "$ref": "#/definitions/snapshots"
+        },
+        "setAccessors": {
+          "$ref": "#/definitions/accessors"
+        }
+      },
+      "type": "object"
+    },
+    "Projects": {
+      "required": [
+        "displayName",
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Project numeric id, which is automatically assigned when you create Google cloud project."
+        },
+        "name": {
+          "type": "string",
+          "description": "Project ID, which is a unique identifier for the project.",
+          "minLength": 6,
+          "maxLength": 30
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Project display name.",
+          "minLength": 4,
+          "maxLength": 30
+        },
+        "allowedUsers": {
+          "type": "array",
+          "description": "List of users allowed to access resources on the specified project.",
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/AllowedUser"
+          }
+        },
+        "alphaEnabled": {
+          "type": "boolean",
+          "description": "Alpha features enabled on this project",
+          "readOnly": true
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the project, which can be one of the following: PENDING_APPROVAL, ENABLED, or DISABLED.",
+          "readOnly": true
+        },
+        "creationTimestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "AllowedUser": {
+      "properties": {
+        "user": {
+          "type": "string",
+          "description": "User email address."
+        },
+        "addedBy": {
+          "type": "string",
+          "description": "Email address of the user added this user to project.",
+          "readOnly": true
+        },
+        "creationTimestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "Users": {
+      "required": [
+        "users"
+      ],
+      "properties": {
+        "users": {
+          "type": "array",
+          "description": "List of users allowed to access resources on the specified project.",
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/AllowedUser"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "login": {
+      "properties": {
+        "session_token": {
+          "type": "string",
+          "description": "[Output Only] session token to be passed by client with every following request.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "Events": {
+      "required": [
+        "logName",
+        "message",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
+        },
+        "name": {
+          "type": "string",
+          "description": "[Output Only] Name of the resource."
+        },
+        "logName": {
+          "type": "string",
+          "description": "Name of the log"
+        },
+        "message": {
+          "type": "string",
+          "description": "Event message"
+        },
+        "severity": {
+          "type": "string",
+          "description": "The severity of the event, which can be one of the following: INFO, WARN, ERROR, or CRITICAL"
+        },
+        "ackedBy": {
+          "type": "string",
+          "description": "The user that acked the event"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "The instance name related to the event"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The event timestamp",
+          "readOnly": true
+        },
+        "creationTimestamp": {
+          "type": "string",
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "EventsCount": {
+      "properties": {
+        "count": {
+          "type": "integer",
+          "description": "Number of events"
+        }
+      },
+      "type": "object"
+    },
+    "Snapshots": {
+      "required": [
+        "name",
+        "retention"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "[Output Only] The unique identifier for the snapshot. This identifier is defined by the server.",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035"
+        },
+        "retention": {
+          "type": "number",
+          "description": "Snapshot retention policy. The number of days to hold the snapshot till automatic deletion. Default 0, meaning no retention policy defined.",
+          "default": 0
+        },
+        "instanceId": {
+          "type": "string",
+          "description": "[Output Only] The filesystem instance id that this snapshot was taken for.",
+          "readOnly": true
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "[Output Only] The filesystem instance name that this snapshot was taken for.",
+          "readOnly": true
+        },
+        "region": {
+          "type": "string",
+          "description": "Snapshot region location.",
+          "readOnly": true
+        },
+        "size": {
+          "type": "integer",
+          "description": "[Output Only] Snapshot size in bytes.",
+          "readOnly": true
+        },
+        "schedule": {
+          "type": "string",
+          "description": "Snapshot scheduling Daily, Weekly, Monthly or Manual.",
+          "readOnly": true,
+          "example": "MANUALLY",
+          "enum": [
+            "MANUALLY",
+            "DAILY",
+            "WEEKLY",
+            "MONTHLY"
+          ]
+        },
+        "share": {
+          "description": "[Output Only] If exists, this object includes the snapshot share parameters.",
+          "readOnly": true,
+          "$ref": "#/definitions/share"
+        },
+        "creationTimestamp": {
+          "type": "string",
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "readOnly": true
+        },
+        "deletionTime": {
+          "type": "string",
+          "description": "",
+          "readOnly": true
+        },
+        "status": {
+          "type": "string",
+          "description": "[Output Only] The status of the snapshot. A snapshot can be used to mount a previous copy of the filesystem, only after the snapshot has been successfully created and the status is set to READY. Possible values are PENDING, READY.",
+          "readOnly": true,
+          "example": "PENDING",
+          "enum": [
+            "PENDING",
+            "READY",
+            "REMOVING"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "share": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "[Output Only] Share name",
+          "readOnly": true
+        },
+        "nfsMountPoint": {
+          "type": "string",
+          "description": "[Output Only] NFS mount point to be used in mount command.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "SnapshotShareCreate": {
+      "required": [
+        "shareName"
+      ],
+      "properties": {
+        "shareName": {
+          "type": "string",
+          "description": "[Output Only] Share name"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  },
+  "host": "localhost"
+}
