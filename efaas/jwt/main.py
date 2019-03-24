@@ -74,12 +74,17 @@ def get_google_id_token(sa_jwt_token: str) -> str:
     return res['id_token']
 
 
-def usage():
+def usage() -> str:
+    """
+    Print usage
+    """
     tool_name = os.path.basename(__file__)
-    help_message = f"""This tool must get a credentials file. alternatively, you can set an environment variable to hold the path.
-                   Usage: python {tool_name} -f/ --file <full-path-to-credentials-file>
-                   Or, set the environment variable:
-                   export {__CREDENTIALS_ENV_VAR__}=<full-path-to-credentials-file> """
+    help_message = "This tool must get a credentials file. alternatively, you " \
+                   "can set an environment variable to hold the path.\n\nUsage:\n" \
+                   "python {} -f/ --file <path/to/credentials-file> \n\n" \
+                   "Or, set the environment variable {}:\n" \
+                   "export {}=<path/to/credentials-file> \n".format(
+        tool_name, __CREDENTIALS_ENV_VAR__, __CREDENTIALS_ENV_VAR__)
     return help_message
 
 
@@ -101,8 +106,7 @@ def get_credentials_file_path() -> str or None:
     if not file_path:
         file_path = get_credentials_file_path_from_environment()
     if not file_path:
-        print("Environment variable {} is not set or missing path to "
-              "credentials file.".format(__CREDENTIALS_ENV_VAR__))
+        print(usage())
         sys.exit(1)
 
     return file_path
@@ -123,9 +127,8 @@ def main():
             print("\n\nAuthorization: Bearer {}\n\n".format(google_id_jwt_token))
             sys.exit(0)
     except IOError as err:
-        print("Filename '{}' {}, verify correct path is set in environment "
-              "variable {}.".format(err.filename, err.strerror,
-                                    __CREDENTIALS_ENV_VAR__))
+        print("Filename '{}' {}, incorrect path for credentials file.".format(err.filename, err.strerror))
+        sys.exit(1)
 
 
 if __name__ == '__main__':
