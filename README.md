@@ -1,8 +1,15 @@
 # Elastifile Cloud File Service RESTful API
 
-## Create and run a shared file system using Elastifile Cloud File Service on Google Cloud Platform
+###### Create and run a shared file system using Elastifile Cloud File Service on Google Cloud Platform
 
-### Prerequisites
+## Table of Content
+* [Prerequisites](README.md#pre)
+* [API Reference V1](README.md#v1)
+* [API Reference V2](README.md#v2)
+* [Authentication](README.md#auth)
+
+## [Prerequisites](#pre)
+#### Setup Google Project
 Setup Google Project for consuming a filesystem through Elastifile service API
 
 Per Google cloud project you wish to use the Elastifile service API with, the following information is needed:
@@ -10,7 +17,7 @@ Per Google cloud project you wish to use the Elastifile service API with, the fo
 * VPC network name
 * Network project id and network project numeric id if using a service project attached to host project (shared vpc)
 
-
+#### Enable Elastifile API
 On the selected project run, replacing ${PROJECT} with your cloud console project id, ${NETWORK} with your VPC network name and ${NETWORK-PROJECT} with the VPC host project id (if using shared VPC otherwise use $PROJECT value for both):
 
 * Enable Google Compute API
@@ -37,26 +44,22 @@ On the selected project run, replacing ${PROJECT} with your cloud console projec
 
 `gcloud --project=${NETWORK_PROJECT} beta compute networks peerings update cloud-file-service-network --network=${NETWORK} --import-custom-routes --export-custom-routes` 
 
-### API Reference V1
+## [API Reference V1](#v1)
 
 This API reference is organized by resource type. Each resource type has one or more data representations and one or more methods.
 
 Base URL: https://cloud-file-service-gcp.elastifile.com/api/v1/
 
 ##### Resource Types:
-projects -  Register, list and manage projects
-
-service-class - List available service-classes (SKU’s)
-
-regions - List available regions and zones
-
-instances - Manage Elastifile instances
- 
-snapshots - Manage manual snapshots and snapshots shares
-
-operations - Monitor long living operations
-
-events - List and acknowledge service events
+Resource|Description
+--------|-----------
+projects |  Register, list and manage projects
+service-class | List available service-classes (SKU’s)
+regions | List available regions and zones
+instances | Manage Elastifile instances
+snapshots | Manage manual snapshots and snapshots shares
+operations | Monitor long living operations
+events | List and acknowledge service events
 
 ##### Path parameters
 
@@ -86,7 +89,7 @@ Elastifile service API is using the OpenAPI specification, which is an API descr
   OpenAPI: https://github.com/Elastifile/elastifileapis/blob/v1/efaas/openapi/openapi.json
 
 
-### API Reference V2 (Alpha)
+### [API Reference V2 (Alpha)](#v2)
 
 The API version 2 is currently available only to selected users. To access version 2 of the API please contact elastifile support.
 
@@ -95,7 +98,7 @@ Base URL: https://cloud-file-service-gcp.elastifile.com/api/v2/
 OpenAPI: https://github.com/Elastifile/elastifileapis/blob/v1/efaas/openapi/openapi.v2.json
 
 
-### API Authentication
+## [API Authentication](#auth)
 
 * To authenticate a user, a client application must send a JSON Web Token (JWT) in the authorization header of the HTTP request to Elastifie Cloud File Service API service endpoint. 
 
