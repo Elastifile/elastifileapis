@@ -86,17 +86,17 @@ The Elastifile Service API uses the OpenAPI specification, which is an API descr
 * Navigate to https://editor.swagger.io/
 * Select File -> Import from URL
  
-  OpenAPI: [https://github.com/Elastifile/elastifileapis/blob/v1/efaas/openapi/openapi.json]
+  OpenAPI: [/efaas/openapi/openapi.json](https://github.com/Elastifile/elastifileapis/blob/v1/efaas/openapi/openapi.json)
   
-  Base URL: [https://cloud-file-service-gcp.elastifile.com/api/v1/]
+  Base URL: [https://cloud-file-service-gcp.elastifile.com/api/v1/](https://cloud-file-service-gcp.elastifile.com/api/v1/)
 
 ### [API Reference V2 (Alpha)](#v2)
 
 API Version 2 is currently available only to selected users. To access V2 of the API, please contact Elastifile support.
 
-OpenAPI: [ https://github.com/Elastifile/elastifileapis/blob/master/efaas/openapi/openapi.v2.json]
+OpenAPI: [/efaas/openapi/openapi.v2.json](https://github.com/Elastifile/elastifileapis/blob/master/efaas/openapi/openapi.v2.json)
 
-Base URL: [https://cloud-file-service-gcp.elastifile.com/api/v2/]
+Base URL: [https://cloud-file-service-gcp.elastifile.com/api/v2/](https://cloud-file-service-gcp.elastifile.com/api/v2/)
 
 ## [API Authentication](#auth)
 
